@@ -4,6 +4,7 @@ $(document).ready(function () {
       if(!check_email()) return false;
       if(!check_question()) return false;
       if(!check_difficulty()) return false;
+      if(!check_image()) return false;
       $("#aviso").html("");
       return true;
     });
@@ -18,6 +19,8 @@ $(document).ready(function () {
       $("#incorrecta3").val("");
       $("#dificultad").val("1");
       $("#tema").val("");
+      $("#fileupload").val("");
+      $("#imagen_prev").remove();
       $("#aviso").html("");
     });
 });
@@ -61,6 +64,16 @@ function check_difficulty(){
     return true;
   }else {
     $("#aviso").html("Nivel de dificultad incorrecto, elige un numero del 1 al 3.");
+    return false;
+  }
+}
+
+function check_image(){
+  var pattern = /(.png|.jpg|.jpeg)$/i;
+  if(pattern.test($("#fileupload").val()) || $("#fileupload").val().length == 0){
+    return true;
+  }else{
+    $("#aviso").html("El archivo elegido no es una imagen.");
     return false;
   }
 }

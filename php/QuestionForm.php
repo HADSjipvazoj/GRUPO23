@@ -4,12 +4,14 @@
         <?php include '../html/Head.html'?>
         <script src="../js/jquery-3.4.1.min.js"></script>
         <script src="../js/ValidateFieldsQuestion.js"></script>
+        <script src="../js/ShowImageInForm.js"></script>
+        <link rel="stylesheet" type="text/css" href="../styles/personal.css">
     </head>
     <body>
         <?php include '../php/Menus.php' ?>
         <section class="main" id="s1">
             <div>
-                <form action = "" name = "formulario" id = "formulario">
+                <form action = "AddQuestion.php" name = "formulario" id = "formulario">
                     Marque el tipo de usuario <br>
                     <input type="radio" name="user" id="user1" value="alumno">Alumno<br>
                     <input type="radio" name="user" id="user2" value="profesor">Profesor<br><br>
@@ -26,6 +28,7 @@
                         <option value="3"> 3 </option>
                     </select> <br><br>
                     Tema de la pregunta: <input type="text" id= "tema" name="tema"><br><br>
+                    Imagen para la pregunta (Opcional): <input type="file" name="fileupload" id="fileupload"> <br><br>
                     <input id="submit" type="submit" value="Enviar">
                     <input id="reset" type="button" value="Deshacer">
                     <br><br>
