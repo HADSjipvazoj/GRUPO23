@@ -69,6 +69,7 @@ function check_difficulty(){
 }
 
 function check_image(){
+  if($("#fileupload").length == 0) return true;
   var pattern = /(.png|.jpg|.jpeg)$/i;
   if(pattern.test($("#fileupload").val()) || $("#fileupload").val().length == 0){
     return true;

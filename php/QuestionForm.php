@@ -4,7 +4,6 @@
         <?php include '../html/Head.html'?>
         <script src="../js/jquery-3.4.1.min.js"></script>
         <script src="../js/ValidateFieldsQuestion.js"></script>
-        <script src="../js/ShowImageInForm.js"></script>
         <link rel="stylesheet" type="text/css" href="../styles/personal.css">
     </head>
     <body>
@@ -28,7 +27,6 @@
                         <option value="3"> 3 </option>
                     </select> <br><br>
                     Tema de la pregunta: <input type="text" id= "tema" name="tema"><br><br>
-                    Imagen para la pregunta (Opcional): <input type="file" name="fileupload" id="fileupload"> <br><br>
                     <input id="submit" type="submit" value="Enviar">
                     <input id="reset" type="button" value="Deshacer">
                     <br><br>
