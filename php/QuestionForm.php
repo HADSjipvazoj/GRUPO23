@@ -22,9 +22,9 @@
                     Respuesta Incorrecta 3: <input type="text" id= "incorrecta3" name="incorrecta3"><br><br>
                     Nivel de dificultad:
                     <select name="dificultad" id="dificultad">
-                        <option value="1"> 1 </option>
-                        <option value="2"> 2 </option>
-                        <option value="3"> 3 </option>
+                        <option value="1"> Baja </option>
+                        <option value="2"> Media </option>
+                        <option value="3"> Alta </option>
                     </select> <br><br>
                     Tema de la pregunta: <input type="text" id= "tema" name="tema"><br><br>
                     <input id="submit" type="submit" value="Enviar">

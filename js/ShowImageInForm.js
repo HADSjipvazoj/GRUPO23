@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  //Funcion que modifica el DOM y muestra la imagen elegida para la pregunta.
   $("#fileupload").change( function(){
     var pattern = /(.png|.jpg|.jpeg)$/i;
     $("#imagen_prev").remove();

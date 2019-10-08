@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    //Funcion que comprueba que el formulario es valido. Si no lo es, no se envia al servidor.
     $("#formulario").submit(function () {
       if(!check_fields()) return false;
       if(!check_email()) return false;
@@ -8,6 +9,8 @@ $(document).ready(function () {
       $("#aviso").html("");
       return true;
     });
+
+    //Funcion que resetea los parametros del formulario.
     $("#reset").click( function(){
       $("#user1").prop("checked", false);
       $("#user2").prop("checked", false);
@@ -25,6 +28,7 @@ $(document).ready(function () {
     });
 });
 
+//Funcion que comprueba si los parametros obligatorios han sido rellenados.
 function check_fields(){
   if(!$("#user1").is(":checked") && !$("#user2").is(":checked")){ $("#aviso").html("Selecciona un tipo de usuario."); ;return false;}
   if($("#email").val().length == 0){ $("#aviso").html("Indica tu email."); return false;}
@@ -38,6 +42,7 @@ function check_fields(){
   return true;
 }
 
+//Funcion que comprueba si el email es correcto con respecto al usuario seleccionado.
 function check_email(){
   var pattern;
   if($("#user1").is(":checked")){
@@ -53,11 +58,13 @@ function check_email(){
   }
 }
 
+//Funcion que comprueba si el enunciado tiene una longitud mayor o igual que 10.
 function check_question(){
   if($("#enunciado").val().length < 10){ $("#aviso").html("El enunciado es demasiado corto."); return false;}
   return true;
 }
 
+//Funcion que comprueba si el valor de dificultad es correcto.
 function check_difficulty(){
   var pattern = /^(1|2|3)$/;
   if(pattern.test($("#dificultad").val())){
@@ -68,13 +75,14 @@ function check_difficulty(){
   }
 }
 
+//Funcion que comprueba si se ha elegido un archivo de imagen valido. Si el formulario no incluye la opcion de subir una imagen, la funcion devuelve siempre true.
 function check_image(){
   if($("#fileupload").length == 0) return true;
   var pattern = /(.png|.jpg|.jpeg)$/i;
-  if(pattern.test($("#fileupload").val()) || $("#fileupload").val().length == 0){
+  if(pattern.test($("#fileupload").val())){
     return true;
   }else{
-    $("#aviso").html("El archivo elegido no es una imagen.");
+    $("#aviso").html("Elige un archivo de imagen valido (png, jpg, jpeg).");
     return false;
   }
 }
