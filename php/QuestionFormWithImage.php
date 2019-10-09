@@ -11,7 +11,7 @@
         <?php include '../php/Menus.php' ?>
         <section class="main" id="s1">
             <div>
-                <form action = "AddQuestion.php" name = "formulario" id = "formulario">
+                <form action = "AddQuestionWithImage.php" name = "formulario" id = "formulario">
                     Marque el tipo de usuario <br>
                     <input type="radio" name="user" id="user1" value="alumno">Alumno<br>
                     <input type="radio" name="user" id="user2" value="profesor">Profesor<br><br>
