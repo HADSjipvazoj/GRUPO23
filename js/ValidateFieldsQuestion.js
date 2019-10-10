@@ -46,9 +46,9 @@ function check_fields(){
 function check_email(){
   var pattern;
   if($("#user1").is(":checked")){
-    pattern = /^([a-z]|[A-Z])+[0-9]{3}@ikasle.ehu.(es|eus)$/;
+    pattern = /^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/;
   }else{
-    pattern = /^([a-z]|[A-Z])+(.([a-z]|[A-Z])+)?@ehu.(es|eus)$/;
+    pattern = /^([a-z]|[A-Z])+(\.([a-z]|[A-Z])+)?@ehu\.(es|eus)$/;
   }
   if(pattern.test($("#email").val())){
     return true;
@@ -78,7 +78,7 @@ function check_difficulty(){
 //Funcion que comprueba si se ha elegido un archivo de imagen valido. Si el formulario no incluye la opcion de subir una imagen, la funcion devuelve siempre true.
 function check_image(){
   if($("#fileupload").length == 0) return true;
-  var pattern = /(.png|.jpg|.jpeg)$/i;
+  var pattern = /(\.png|\.jpg|\.jpeg)$/i;
   if(pattern.test($("#fileupload").val())){
     return true;
   }else{
