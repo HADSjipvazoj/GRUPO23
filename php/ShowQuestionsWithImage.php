@@ -2,6 +2,7 @@
 <html>
     <head>
         <?php include '../html/Head.html'?>
+        <link rel="stylesheet" type="text/css" href="../styles/personal.css">
     </head>
 <body>
     <?php include '../php/Menus.php' ?>
@@ -17,21 +18,22 @@
                 if (!$data_base)
                 {
                     die ("Fallo al conectar a MySQL: " . mysqli_connect_error());
-                }else{
-                    echo("Conexión establecida");
                 }
 
-                $query = "SELECT * FROM Preguntas";
+                $query = "SELECT * FROM Preguntas ORDER BY primary_key DESC";
                 if(!$results = $data_base->query($query)){
                     die ("Fallo al hacer la query a MySQL: " . mysqli_error($db));
                 }
                 
-                echo("<h1> Preguntas almacenadas en la Base de Datos</h1>");
-                echo("<table>");
-                echo("<tr><th>correo</th></tr>");
+                echo("<h1> Preguntas almacenadas en la Base de Datos </h1>");
+                echo("<table align='center' id = 'tabla_bd'>");
+                echo("<tr><th>correo</th><th>Enunciado</th>><th>Respuesta Correcta</th><th>Imagen</th></tr>");
                 while($row = $results->fetch_assoc())
                 {
-                    echo("<tr><td>".$row["correo"]."</td></tr>");
+                    echo('<tr><td>'.$row["correo"].'</td>
+                              <td>'.$row["enunciado"].'</td>
+                              <td>'.$row["r_correcta"].'</td>
+                              <td height = "90"><img id = "imagen_prev" src="data:image/jpeg;base64,'.base64_encode($row['imagen']).'"</td></tr>');
                 }
                 echo("</table>");
             ?>
