@@ -22,8 +22,25 @@
                     }
 
                     $image = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-                    $insert = "INSERT INTO Preguntas (tipo_usuario, correo, enunciado, r_correcta, r_incorrecta_1, r_incorrecta_2, r_incorrecta_3, r_incorrecta_4, dificultad, imagen)  
-                    VALUES ('".$_REQUEST["user"]."','". $_REQUEST["email"]."','".  $_REQUEST["enunciado"]."','". $_REQUEST['correcta']."','". $_REQUEST['incorrecta1']."','". $_REQUEST['incorrecta2']."','". $_REQUEST['incorrecta3']."', 'prueba', 'baja','$image')";
+                    $insert =  "INSERT INTO Preguntas (tipo_usuario, 
+                                                      correo, enunciado, 
+                                                      r_correcta, 
+                                                      r_incorrecta_1, 
+                                                      r_incorrecta_2, 
+                                                      r_incorrecta_3, 
+                                                      r_incorrecta_4, 
+                                                      dificultad, 
+                                                      imagen)  
+                                VALUES ('".$_REQUEST["user"]."',
+                                        '".$_REQUEST["email"]."',
+                                        '".$_REQUEST["enunciado"]."',
+                                        '".$_REQUEST['correcta']."',
+                                        '".$_REQUEST['incorrecta1']."',
+                                        '".$_REQUEST['incorrecta2']."',
+                                        '".$_REQUEST['incorrecta3']."', 
+                                        'prueba', 
+                                        'baja',
+                                        '$image')";
                     
                     if ($data_base->query($insert) == TRUE) {
                         echo "New record created successfully";
