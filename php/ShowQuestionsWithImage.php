@@ -20,7 +20,7 @@
                     die ("Fallo al conectar a MySQL: " . mysqli_connect_error());
                 }
 
-                $query = "SELECT * FROM Preguntas ORDER BY primary_key DESC";
+                $query = "SELECT * FROM Preguntas ORDER BY id DESC";
                 if(!$results = $data_base->query($query)){
                     die ("Fallo al hacer la query a MySQL: " . mysqli_error($db));
                 }

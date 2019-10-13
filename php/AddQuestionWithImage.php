@@ -21,15 +21,16 @@
                         echo("Conexión establecida <br>");
                     }
 
-                    $image = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+                    $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
                     $insert =  "INSERT INTO Preguntas (tipo_usuario, 
-                                                      correo, enunciado, 
+                                                      correo, 
+                                                      enunciado, 
                                                       r_correcta, 
-                                                      r_incorrecta_1, 
-                                                      r_incorrecta_2, 
-                                                      r_incorrecta_3, 
-                                                      r_incorrecta_4, 
+                                                      r_incorrecta1, 
+                                                      r_incorrecta2, 
+                                                      r_incorrecta3,  
                                                       dificultad, 
+                                                      tema,
                                                       imagen)  
                                 VALUES ('".$_REQUEST["user"]."',
                                         '".$_REQUEST["email"]."',
@@ -38,8 +39,8 @@
                                         '".$_REQUEST['incorrecta1']."',
                                         '".$_REQUEST['incorrecta2']."',
                                         '".$_REQUEST['incorrecta3']."', 
-                                        'prueba', 
-                                        'baja',
+                                        '".$_REQUEST['dificultad']."',
+                                        '".$_REQUEST['tema']."',
                                         '$image')";
                     
                     if ($data_base->query($insert) == TRUE) {
