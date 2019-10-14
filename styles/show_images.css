@@ -1,9 +1,13 @@
 table, td, th {
     border: 2px solid black;
 }
+tr{
+    background-color: #FEFEFE;
+}
 
 th {
     height: 50px;
+    background-color: #dadada;
 }
 
 table.center {
@@ -14,9 +18,7 @@ table.center {
     text-align: center;
 }
 
-tr{
-    background-color: #FEFEFE;
-}
 
-tr:nth-child(even) {background-color: #c2c2c2;}
-tr:hover {background-color: #5e5e5e;}
+
+/*tr:nth-child(even) {background-color: #c2c2c2;}*/
+tr:hover {background-color: #dadada;}

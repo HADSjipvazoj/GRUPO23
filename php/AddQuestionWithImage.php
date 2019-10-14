@@ -8,17 +8,18 @@
         <section class="main" id="s1">
             <div>
                 <?php
+                    // Suprimir los warnings en caso de errores.
+                    error_reporting(E_ERROR | E_PARSE);
                     $user = "root";
                     $password = "";
                     $db = "Quiz";
 
-                    $data_base = mysqli_connect("localhost",$user, $password, $db);
-
-                    if (!$data_base)
+                    if (!$data_base = mysqli_connect("localhost", $user, $password, $db))
                     {
-                        die ("Fallo al conectar a MySQL: " . mysqli_connect_error());
+                        die("No ha sido posible establecer la conexión con el servidor. <br> Inténtelo de nuevo más adelante.");
+                        //die ("Fallo al conectar a MySQL: " . mysqli_connect_error());
                     }else{
-                        echo("Conexión establecida <br>");
+                        echo("Conexión con el servidor establecida establecida. <br>");
                     }
 
                     $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
@@ -44,9 +45,11 @@
                                         '$image')";
                     
                     if ($data_base->query($insert) == TRUE) {
-                        echo "New record created successfully";
+                        echo "Nueva pregunta almacenada con éxito. <br>";
+                        echo("Puede consultar las preguntas en el siguiente <a href = 'ShowQuestionsWithImage.php'>enlace</a>.");
                     } else {
-                        echo "Error: <br>" . $data_base->error;
+                        echo("No ha sido posible insertar su pregunta en la base de datos.");
+                        //echo "Error: <br>" . $data_base->error;
                     }
 
                     $data_base->close();
