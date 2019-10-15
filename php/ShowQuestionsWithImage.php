@@ -12,12 +12,11 @@
                 // Eliminar wernings cuando se producen errores.
                 // Estos errores se gestionarán más adelante.
                 error_reporting(E_ERROR | E_PARSE);
-                $user = "root";
-                $password = "";
-                $db = "quiz";
+
+                include "DbConfig.php";
 
                 // Establecer la conexión con la base de datos
-                $data_base = mysqli_connect("localhost",$user, $password, $db);
+                $data_base = mysqli_connect($server, $user, $pass, $basededatos);
 
                 // Caso en que la conexión no se haya podido establecer
                 if (!$data_base)

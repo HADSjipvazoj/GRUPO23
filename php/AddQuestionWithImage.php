@@ -11,11 +11,11 @@
                     // Eliminar wernings cuando se producen errores
                     // Estos errores se gestionarán más adelante
                     error_reporting(E_ERROR | E_PARSE);
-                    $user = "root";
-                    $password = "";
-                    $db = "quiz";
 
-                    if (!$data_base = mysqli_connect("localhost", $user, $password, $db))
+                    include "DbConfig.php";
+
+                    //Establecer la conexion con la base de datos.
+                    if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                     {
                         die("No ha sido posible establecer la conexión con el servidor. <br> Inténtelo de nuevo más adelante.");
                     }else{
@@ -44,7 +44,7 @@
                                         '".$_REQUEST['dificultad']."',
                                         '".$_REQUEST['tema']."',
                                         '$image')";
-                                    
+
                     // Control de errores sobre la introducción de nuevas entradas en la base de datos
                     if ($data_base->query($insert) == TRUE) {
                         echo("Nueva pregunta almacenada con éxito. <br>");
