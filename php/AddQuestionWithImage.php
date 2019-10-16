@@ -17,7 +17,7 @@
                     //Establecer la conexion con la base de datos.
                     if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                     {
-                        die("No ha sido posible establecer la conexión con el servidor. <br> Inténtelo de nuevo más adelante.");
+                        die("No ha sido posible establecer la conexión con el servidor. <br> <a href = 'QuestionFormWithImage.php'> Intentelo de nuevo. </a>");
                     }else{
                         echo("Conexión con el servidor establecida. <br>");
                     }
@@ -47,10 +47,9 @@
 
                     // Control de errores sobre la introducción de nuevas entradas en la base de datos
                     if ($data_base->query($insert) == TRUE) {
-                        echo("Nueva pregunta almacenada con éxito. <br>");
-                        echo("Puede consultar las preguntas en el siguiente <a href = 'ShowQuestionsWithImage.php'>enlace</a>.");
+                        echo("Nueva pregunta almacenada con éxito. <br> Puede consultar las preguntas en el siguiente <a href = 'ShowQuestionsWithImage.php'>enlace</a>.");
                     } else {
-                        echo("No ha sido posible insertar su pregunta en la base de datos, inténtelo de nuevo más tarde.");
+                        echo("No ha sido posible insertar su pregunta en la base de datos. <br> <a href = 'QuestionFormWithImage.php'> Intentelo de nuevo. </a>");
                     }
                     // Cerrar la conexión con la base de datos
                     $data_base->close();

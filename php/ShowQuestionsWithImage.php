@@ -28,6 +28,7 @@
                 $query = "SELECT correo, enunciado, r_correcta, imagen FROM preguntas ORDER BY id";
                 // Puede haber algún error en la consulta.
                 if(!$results = $data_base->query($query)){
+                    $data_base->close();
                     die("No ha sido posible acceder a las preguntas. <br> Por favor, inténtelo más adelante.");
                 }
 
@@ -37,9 +38,9 @@
                 echo("<tr> <th>Dirección de correo</th> <th>Enunciado</th> <th>Respuesta Correcta</th> <th>Imagen</th> </tr>");
                 while($row = $results->fetch_assoc())
                 {
-                    echo('<tr><td>'.$row["correo"].'</td>
-                              <td>'.$row["enunciado"].'</td>
-                              <td>'.$row["r_correcta"].'</td>
+                    echo('<tr><td>'.htmlentities($row["correo"]).'</td>
+                              <td>'.htmlentities($row["enunciado"]).'</td>
+                              <td>'.htmlentities($row["r_correcta"]).'</td>
                               <td height = "90"><img height="90" align = "middle" src="data:image/jpeg;base64,'.base64_encode($row['imagen']).'"</td></tr>');
                 }
                 echo("</table>");
