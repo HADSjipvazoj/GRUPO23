@@ -25,7 +25,7 @@
                 }
 
                 // Solo cojo de la base de datos las columnas que necesito.
-                $query = "SELECT correo, enunciado, r_correcta, imagen FROM preguntas ORDER BY id";
+                $query = "SELECT correo, enunciado, r_correcta, imagen FROM Preguntas ORDER BY id";
                 // Puede haber algún error en la consulta.
                 if(!$results = $data_base->query($query)){
                     $data_base->close();

@@ -4,7 +4,7 @@ if ($local==1){
     $server="localhost";
     $user="root";
     $pass="";
-    $basededatos="quiz";
+    $basededatos="Quiz";
 }
 else{
     $server="localhost";

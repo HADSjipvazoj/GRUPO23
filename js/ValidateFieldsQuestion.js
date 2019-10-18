@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //Funcion que comprueba que el formulario es valido. Si no lo es, no se envia al servidor.
-    $("#formulario").submit(function () {
+    /*$("#formulario").submit(function () {
         if (!check_fields()) return false;
         if (!check_email()) return false;
         if (!check_question()) return false;
@@ -8,7 +8,7 @@ $(document).ready(function () {
         if (!check_image()) return false;
         $("#aviso").html("");
         return true;
-    });
+    });*/
 
     //Funcion que resetea los parametros del formulario.
     $("#reset").click(function () {
