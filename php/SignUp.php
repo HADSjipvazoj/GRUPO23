@@ -11,18 +11,21 @@
         <section class="main" id="s1">
             <div>
                 <?php
-                    //error_reporting(E_ERROR | E_PARSE);
+                    // Suprimir warnings. Los errores se gestionan más abajo
+                    error_reporting(E_ERROR | E_PARSE);
                     function error_mensaje($mensaje) {
                         echo  $mensaje.'<br>';
                         echo 'Enlace al <a href="javascript:window.history.back()">formulario</a>.';
                         exit;
                     }
+                    // Cuando se han enviado los datos del registro
                     if(isset($_REQUEST["submit"])){
+                        // Si el usuario no ha introducido el tipo de usuario a registrar
                         if(!isset($_REQUEST["user"])){
                             $mensaje ='Introduzca el tipo de usuario';
                             error_mensaje($mensaje);
                         }
-
+                        // Seleccionar la expresión regular para cada uno de los tipos de usuario
                         if ($_REQUEST['user'] == "Alumno") {
                             $pattern = '/^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/';
                         } else {
@@ -32,22 +35,27 @@
                             $mensaje = "Email incorrecto para el tipo de usuario indicado.";
                             error_mensaje($mensaje);
                         }
-
+                        // La contraseña debe tener al menos 6 caracteres
                         if(strlen($_REQUEST["pass1"]) < 6){
                             $mensaje = "Contraseña demasiado corta";
                             error_mensaje($mensaje);
                         }
+
+                        // Comprobar si son iguales
                         if($_REQUEST["pass1"] != $_REQUEST["pass2"]){
                             $mensaje = "Las contraseñas no coinciden";
                             error_mensaje($mensaje);
                         }
+
+                        // Tras comprobar todo ya accedo a la base de datos
                         include "DbConfig.php";
                         if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                         {
-                            die("No ha sido posible establecer la conexión con el servidor. <br> <a href = 'QuestionFormWithImage.php'> Intentelo de nuevo. </a>");
+                            die("No ha sido posible establecer la conexión con el servidor. <br> <a href = 'SignUp.php'> Intentelo de nuevo. </a>");
                         }
                         $result = $data_base->query("SELECT correo from usuarios WHERE correo ='".$_REQUEST['email']."' ");
-                            
+                        
+                        // Solo lo añado si el usuario no está registrado    
                         if(mysqli_num_rows($result) == 0)
                         {
                             $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
@@ -59,13 +67,14 @@
                                                 '$image')";
 
                             if ($data_base->query($insert) == TRUE) {
-                                echo("Usuario creado con éxito. <br> Acceso a la aplicación <a href = 'Layout.php'>enlace</a>.");
+                                echo("Usuario creado con éxito. <br> Proceda a loggearse -> <a href = 'LogIn.php'>enlace</a>.");
                             } else {
-                                echo mysqli_errno($data_base) . ": " . mysqli_error($data_base) . "\n";
+                                // echo mysqli_errno($data_base) . ": " . mysqli_error($data_base) . "\n";
                                 $mensaje = "No ha sido posible almacenar el usuario. Inténtelo de nuevo más adelante.";
                                 error_mensaje($mensaje);    
                             }
                         } else {
+                        // Si el usuario ya está registrado se devuelve un error
                             $mensaje = "Usuario ya registrado. Cambie la dirección de email.";
                             error_mensaje($mensaje); 
                         }
@@ -73,6 +82,7 @@
                         $data_base->close();
 
                     }else{
+                        // Cuando se muestra la pantalla de registro
                         echo'<form  name = "formulario" id = "formulario" method = "POST" enctype="multipart/form-data">
                             Marque el tipo de usuario <br>
                             <input type="radio" name="user" id="user1" value="Alumno">Alumno<br>
@@ -86,8 +96,7 @@
                             <input id="reset" type="reset" value="Deshacer">
                         </form>';
                     }
-                ?>
-                
+                ?>    
             </div>
         </section>
         <?php include '../html/Footer.html' ?>
