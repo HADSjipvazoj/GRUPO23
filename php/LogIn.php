@@ -3,6 +3,7 @@
     <head>
         <?php include '../html/Head.html'?>
         <script src="../js/jquery-3.4.1.min.js"></script>
+        <script src="../js/ShowImageInForm.js"></script>
         <link rel="stylesheet" type="text/css" href="../styles/personal.css">
     </head>
     <body>
@@ -47,8 +48,8 @@
                                 <input type="radio" name="user" id="user2" value="Profesor">Profesor<br><br>-->
                                 Dirección de correo: <input type="text" id= "email" name="email"><br>
                                 Contraseña: <input type="text" id= "pass" name="pass"><br>
-                                <input id="submit" name="submit" type="submit" value="Enviar">
-                            </form>';
+                                <input id="submit" name="submit" type="submit" value="Enviar"> <br>
+                             </form>';
                     }
                     
                 ?>

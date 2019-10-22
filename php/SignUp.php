@@ -50,10 +50,13 @@
                             
                         if(mysqli_num_rows($result) == 0)
                         {
+                            $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
                             $insert =  "INSERT INTO usuarios (correo,
-                                                      contrasenia)
+                                                      contrasenia,
+                                                      imagen)
                                         VALUES ('".$_REQUEST['email']."',
-                                                '".$_REQUEST['pass1']."')";
+                                                '".$_REQUEST['pass1']."',
+                                                '$image')";
 
                             if ($data_base->query($insert) == TRUE) {
                                 echo("Usuario creado con éxito. <br> Acceso a la aplicación <a href = 'Layout.php'>enlace</a>.");
