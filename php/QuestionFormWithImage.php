@@ -11,11 +11,15 @@
         <?php include '../php/Menus.php' ?>
         <section class="main" id="s1">
             <div>
-                <form action = "AddQuestionWithImage.php" name = "formulario" id = "formulario" method = "POST" enctype="multipart/form-data">
+                <?php
+                    echo "<form action = 'AddQuestionWithImage.php?usuario=".$_REQUEST["usuario"]."' name = 'formulario' id = 'formulario' method = 'POST' enctype='multipart/form-data'>"; 
+                ?>
                     Marque el tipo de usuario <br>
                     <input type="radio" name="user" id="user1" value="Alumno">Alumno<br>
                     <input type="radio" name="user" id="user2" value="Profesor">Profesor<br><br>
-                    Dirección de correo: <input type="text" id= "email" name="email"><br><br>
+                <?php   
+                    echo"Dirección de correo: <input type='text' id= 'email' name='email' disabled value = '".$_GET["usuario"]."'><br><br>";
+                ?>  
                     Enunciado de la pregunta: <input type="text" id= "enunciado" name="enunciado"><br><br>
                     Respuesta Correcta: <input type="text" id= "correcta" name="correcta"><br>
                     Respuesta Incorrecta 1: <input type="text" id= "incorrecta1" name="incorrecta1"><br>

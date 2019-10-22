@@ -111,9 +111,9 @@
 
                     // Control de errores sobre la introducción de nuevas entradas en la base de datos
                     if ($data_base->query($insert) == TRUE) {
-                        echo("Nueva pregunta almacenada con éxito. <br> Puede consultar las preguntas en el siguiente <a href = 'ShowQuestionsWithImage.php'>enlace</a>.");
+                        echo("Nueva pregunta almacenada con éxito. <br> Puede consultar las preguntas en el siguiente <a href = 'ShowQuestionsWithImage.php?usuario=".$_REQUEST["usuario"]."'>enlace</a>.");
                     } else {
-                        echo("No ha sido posible insertar su pregunta en la base de datos. <br> <a href = 'QuestionFormWithImage.php'> Intentelo de nuevo. </a>");
+                        echo("No ha sido posible insertar su pregunta en la base de datos. <br> <a href = 'QuestionFormWithImage.php?usuario=".$_REQUEST["usuario"]."'> Intentelo de nuevo. </a>");
                     }
                     // Cerrar la conexión con la base de datos
                     $data_base->close();
