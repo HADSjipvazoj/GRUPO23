@@ -1,3 +1,8 @@
+<?php
+  if(!isset($_GET["usuario"])){
+      header('Location: Layout.php');
+  }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,65 +24,72 @@
                         exit;
                     }
 
-                    if(!isset($_REQUEST['user'])){
+                    if(!isset($_REQUEST['user']) || strlen($_REQUEST['user']) == 0){
                         $mensaje = "Selecciona un tipo de usuario.";
                         error_mensaje($mensaje);
                     }
 
-                    if(strlen($_REQUEST['email']) == 0){
+                    if(!isset($_REQUEST['email']) || strlen($_REQUEST['email']) == 0){
                         $mensaje = "Indica tu email.";
                         error_mensaje($mensaje);
                     }
+
                     if ($_REQUEST['user'] == "Alumno") {
                         $pattern = '/^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/';
                     } else {
                         $pattern = '/^([a-z]|[A-Z])+(\.([a-z]|[A-Z])+)?@ehu\.(es|eus)$/';
                     }
+
                     if (!preg_match($pattern, $_REQUEST['email'])) {
                         $mensaje = "Email incorrecto para el tipo de usuario indicado.";
                         error_mensaje($mensaje);
                     }
 
-                    if(strlen($_REQUEST['enunciado']) == 0){
+                    if(!isset($_REQUEST['enunciado']) || strlen($_REQUEST['enunciado']) == 0){
                         $mensaje = "Indica un enunciado.";
                         error_mensaje($mensaje);
                     }
-                    if(strlen($_REQUEST['enunciado']) < 10){
-                        $mensaje = "El enunciado debe tener al menos 10 caracteres.";
-                        error_mensaje($mensaje);
-                    }
-                    if(strlen($_REQUEST['correcta']) == 0){
+
+                    if(!isset($_REQUEST['correcta']) || strlen($_REQUEST['correcta']) == 0){
                         $mensaje = "Indica la respuesta correcta.";
                         error_mensaje($mensaje);
                     }
-                
-                    if(strlen($_REQUEST['incorrecta1']) == 0){
+
+                    if(!isset($_REQUEST['incorrecta1']) || strlen($_REQUEST['incorrecta1']) == 0){
                         $mensaje = "Primera respuesta incorrecta no especificada.";
                         error_mensaje($mensaje);
                     }
-                    if(strlen($_REQUEST['incorrecta2']) == 0){
+                    if(!isset($_REQUEST['incorrecta2']) || strlen($_REQUEST['incorrecta2']) == 0){
                         $mensaje = "Segunda respuesta incorrecta no especificada.";
                         error_mensaje($mensaje);
                     }
-                    if(strlen($_REQUEST['incorrecta3']) == 0){
+                    if(!isset($_REQUEST['incorrecta3']) || strlen($_REQUEST['incorrecta3']) == 0){
                         $mensaje = "Tercera respuesta incorrecta no especificada.";
                         error_mensaje($mensaje);
                     }
 
-                    if(strlen($_REQUEST['dificultad']) == 0){
+                    if(!isset($_REQUEST['dificultad']) || strlen($_REQUEST['dificultad']) == 0){
                         $mensaje = "Selecciona un nivel de dificultad.";
                         error_mensaje($mensaje);
                     }
-                    $pattern = '/^(1|2|3)$/';
-                    if (!preg_match($pattern, $_REQUEST['dificultad'])) {
-                        $mensaje = "Nivel de dificultad incorrecto, elige un numero del 1 al 3.";
-                        error_mensaje($mensaje);
-                    }
-                    if(strlen($_REQUEST['tema']) == 0){
+
+                    if(!isset($_REQUEST['tema']) || strlen($_REQUEST['tema']) == 0){
                         $mensaje = "Indica un tema para la pregunta.";
                         error_mensaje($mensaje);
                     }
-                    
+
+                    // Acceder a la imagen enviada desde el cliente
+                    if(!$image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]))){
+                        $mensaje = "Indica una imagen valida para la pregunta.";
+                        error_mensaje($mensaje);
+                    }
+
+                    $pattern = '/(\.png|\.jpg|\.jpeg)$/i';
+                    if(!preg_match($pattern, $_FILES["fileupload"]["name"])){
+                        $mensaje = "Indica una imagen valida para la pregunta.";
+                        error_mensaje($mensaje);
+                    };
+
                     //Establecer la conexion con la base de datos.
                     if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                     {
@@ -86,8 +98,6 @@
                         echo("Conexión con el servidor establecida. <br>");
                     }
 
-                    // Acceder a la imagen enviada desde el cliente
-                    $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
                     $insert =  "INSERT INTO Preguntas (tipo_usuario,
                                                       correo,
                                                       enunciado,

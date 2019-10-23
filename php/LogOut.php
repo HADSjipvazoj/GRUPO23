@@ -1,3 +1,8 @@
+<?php
+  if(isset($_GET["usuario"])){
+    header('Location: Layout.php');
+  }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,7 +14,7 @@
         <?php include '../php/Menus.php' ?>
         <section class="main" id="s1">
             <div>
-                <h1>Adios</h1>
+                <h1>Ha salido de la aplicacion con exito.</h1>
             </div>
         </section>
         <?php include '../html/Footer.html' ?>

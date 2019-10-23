@@ -1,3 +1,8 @@
+<?php
+  if(!isset($_GET["usuario"])){
+    header('Location: Layout.php');
+  }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,6 +14,9 @@
         <section class="main" id="s1">
             <div>
             <?php
+                if($error){
+                    die("El usuario no ha podido ser verificado. Intentelo en otro momento.");
+                }
                 // Eliminar wernings cuando se producen errores.
                 // Estos errores se gestionarán más adelante.
                 error_reporting(E_ERROR | E_PARSE);

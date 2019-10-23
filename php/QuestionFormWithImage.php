@@ -1,3 +1,8 @@
+<?php
+  if(!isset($_GET["usuario"])){
+      header('Location: Layout.php');
+  }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,14 +17,24 @@
         <section class="main" id="s1">
             <div>
                 <?php
-                    echo "<form action = 'AddQuestionWithImage.php?usuario=".$_REQUEST["usuario"]."' name = 'formulario' id = 'formulario' method = 'POST' enctype='multipart/form-data'>"; 
+                    if($error){
+                        die("El usuario no ha podido ser verificado. Intentelo en otro momento.");
+                    }
+                    echo "<form action = 'AddQuestionWithImage.php?usuario=".$_GET["usuario"]."' name = 'formulario' id = 'formulario' method = 'POST' enctype='multipart/form-data'>";
                 ?>
                     Marque el tipo de usuario <br>
-                    <input type="radio" name="user" id="user1" value="Alumno">Alumno<br>
-                    <input type="radio" name="user" id="user2" value="Profesor">Profesor<br><br>
-                <?php   
-                    echo"Dirección de correo: <input type='text' id= 'email' name='email' readonly value = '".$_GET["usuario"]."'><br><br>";
-                ?>  
+                <?php
+                    $pattern = '/^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/';
+                    if(preg_match($pattern, $_GET['usuario'])){
+                        echo '<input type="radio" name="user" id="user1" value="Alumno" checked readonly>Alumno<br>';
+                        echo '<input type="radio" name="user" id="user2" value="Profesor" disabled readonly>Profesor<br><br>';
+                    }else{
+                      echo '<input type="radio" name="user" id="user1" value="Alumno" disabled readonly>Alumno<br>';
+                      echo '<input type="radio" name="user" id="user2" value="Profesor" checked readonly>Profesor<br><br>';
+                    }
+
+                    echo"Dirección de correo: <input type='text' id= 'email' name='email' value = '".$_GET["usuario"]."' readonly><br><br>";
+                ?>
                     Enunciado de la pregunta: <input type="text" id= "enunciado" name="enunciado"><br><br>
                     Respuesta Correcta: <input type="text" id= "correcta" name="correcta"><br>
                     Respuesta Incorrecta 1: <input type="text" id= "incorrecta1" name="incorrecta1"><br>

@@ -1,3 +1,8 @@
+<?php
+    if(isset($_GET["usuario"])){
+        header('Location: Layout.php');
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,24 +20,38 @@
                         echo  $mensaje.'<br>';
                         echo 'Enlace al <a href="javascript:window.history.back()">formulario</a>.';
                         exit;
-                    } 
+                    }
                     if(isset($_REQUEST["submit"])){
                         // Suprimir warnings. Los errores se gestionan más abajo
                         error_reporting(E_ERROR | E_PARSE);
                         include "DbConfig.php";
 
+                        if(!isset($_REQUEST["email"]) || strlen($_REQUEST['email']) == 0){
+                          $mensaje = "Introduce el correo del usuario.";
+                          error_mensaje($mensaje);
+                        }
+
+                        if(!isset($_REQUEST["pass"]) || strlen($_REQUEST['pass']) == 0){
+                          $mensaje = "Introduce la contrasenia del usuario.";
+                          error_mensaje($mensaje);
+                        }
+
                         // Establecer la conexión con la base de datos
                         if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                         {
-                            die("No ha sido posible establecer la conexión con el servidor. <br> <a href = 'QuestionFormWithImage.php'> Intentelo de nuevo. </a>");
+                            $mensaje = "No ha sido posible establecer la conexión con el servidor.";
+                            error_mensaje($mensaje);
                         }
                         // Mirar si el usuario está en la base de datos
-                        $result = $data_base->query("SELECT correo, contrasenia from usuarios WHERE correo ='".$_REQUEST['email']."' ");
-                        
+                        if(!$result = $data_base->query("SELECT correo, contrasenia from usuarios WHERE correo ='".$_REQUEST['email']."' ")){
+                            $mensaje = "No ha sido posible establecer la conexión con el servidor.";
+                            error_mensaje($mensaje);
+                        };
+
                         if(mysqli_num_rows($result) == 0) // El usuario no está registrado
-                        {         
+                        {
                             $mensaje = "Usuario no registrado.";
-                            error_mensaje($mensaje);       
+                            error_mensaje($mensaje);
                         } else {
                             // Caso de que el usuario esté registrado
                             $user = $result->fetch_assoc();
@@ -44,7 +63,7 @@
                                 echo"Credenciales correctas <br>";
                                 echo"Acceso a la aplicación <a href = 'Layout.php?usuario=".$_REQUEST["email"]."'>enlace</a>.";
                             }
-                            
+
                         }
                         // Cerrar la base de datos
                         $data_base->close();
@@ -58,9 +77,9 @@
                                 <input id="submit" name="submit" type="submit" value="Enviar"> <br>
                              </form>';
                     }
-                    
+
                 ?>
-                
+
             </div>
         </section>
         <?php include '../html/Footer.html' ?>

@@ -1,3 +1,8 @@
+<?php
+    if(isset($_GET["usuario"])){
+        header('Location: Layout.php');
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,9 +24,9 @@
                         exit;
                     }
                     // Cuando se han enviado los datos del registro
-                    if(isset($_REQUEST["submit"])){
+                    if(isset($_REQUEST['submit'])){
                         // Si el usuario no ha introducido el tipo de usuario a registrar
-                        if(!isset($_REQUEST["user"])){
+                        if(!isset($_REQUEST['user']) || strlen($_REQUEST['user']) == 0){
                             $mensaje ='Introduzca el tipo de usuario';
                             error_mensaje($mensaje);
                         }
@@ -31,54 +36,75 @@
                         } else {
                             $pattern = '/^([a-z]|[A-Z])+(\.([a-z]|[A-Z])+)?@ehu\.(es|eus)$/';
                         }
-                        if (!preg_match($pattern, $_REQUEST['email'])) {
+
+                        if (!isset($_REQUEST['email']) || !preg_match($pattern, $_REQUEST['email'])) {
                             $mensaje = "Email incorrecto para el tipo de usuario indicado.";
                             error_mensaje($mensaje);
                         }
+
+                        if(!isset($_REQUEST['nombre']) || strlen($_REQUEST["nombre"]) == 0){
+                            $mensaje = "Introduzca su nombre.";
+                            error_mensaje($mensaje);
+                        }
+
                         // La contraseña debe tener al menos 6 caracteres
-                        if(strlen($_REQUEST["pass1"]) < 6){
+                        if(!isset($_REQUEST['pass1']) || strlen($_REQUEST["pass1"]) < 6){
                             $mensaje = "Contraseña demasiado corta";
                             error_mensaje($mensaje);
                         }
 
                         // Comprobar si son iguales
-                        if($_REQUEST["pass1"] != $_REQUEST["pass2"]){
+                        if(!isset($_REQUEST['pass2']) || $_REQUEST["pass1"] != $_REQUEST["pass2"]){
                             $mensaje = "Las contraseñas no coinciden";
                             error_mensaje($mensaje);
                         }
 
                         // Tras comprobar todo ya accedo a la base de datos
                         include "DbConfig.php";
+
                         if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                         {
-                            die("No ha sido posible establecer la conexión con el servidor. <br> <a href = 'SignUp.php'> Intentelo de nuevo. </a>");
+                            $mensaje = "No ha sido posible establecer la conexión con el servidor.";
+                            error_mensaje($mensaje);
                         }
-                        $result = $data_base->query("SELECT correo from usuarios WHERE correo ='".$_REQUEST['email']."' ");
-                        
-                        // Solo lo añado si el usuario no está registrado    
+                        if(!$result = $data_base->query("SELECT correo from usuarios WHERE correo ='".$_REQUEST['email']."' ")){
+                            $mensaje = "No ha sido posible establecer la conexión con el servidor.";
+                            error_mensaje($mensaje);
+                        };
+
+                        // Solo lo añado si el usuario no está registrado
                         if(mysqli_num_rows($result) == 0)
                         {
-                            $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
+                            $pattern = '/(\.png|\.jpg|\.jpeg)$/i';
+                            if($_FILES["fileupload"]["tmp_name"] && preg_match($pattern, $_FILES["fileupload"]["name"])){
+                              $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
+                            }else {
+                              $image = addslashes(file_get_contents("../images/anonymous.jpg"));
+                            }
+
                             $insert =  "INSERT INTO usuarios (correo,
+                                                      tipo,
+                                                      nombre,
                                                       contrasenia,
                                                       imagen)
                                         VALUES ('".$_REQUEST['email']."',
+                                                '".$_REQUEST['user']."',
+                                                '".$_REQUEST['nombre']."',
                                                 '".$_REQUEST['pass1']."',
                                                 '$image')";
 
                             if ($data_base->query($insert) == TRUE) {
                                 echo("Usuario creado con éxito. <br> Proceda a loggearse -> <a href = 'LogIn.php'>enlace</a>.");
                             } else {
-                                // echo mysqli_errno($data_base) . ": " . mysqli_error($data_base) . "\n";
                                 $mensaje = "No ha sido posible almacenar el usuario. Inténtelo de nuevo más adelante.";
-                                error_mensaje($mensaje);    
+                                error_mensaje($mensaje);
                             }
                         } else {
                         // Si el usuario ya está registrado se devuelve un error
                             $mensaje = "Usuario ya registrado. Cambie la dirección de email.";
-                            error_mensaje($mensaje); 
+                            error_mensaje($mensaje);
                         }
-                       
+
                         $data_base->close();
 
                     }else{
@@ -96,7 +122,7 @@
                             <input id="reset" type="reset" value="Deshacer">
                         </form>';
                     }
-                ?>    
+                ?>
             </div>
         </section>
         <?php include '../html/Footer.html' ?>
