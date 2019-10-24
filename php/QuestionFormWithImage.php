@@ -21,7 +21,7 @@
                     // Introducir el email del usuario registrado en la URL a la que mandar los resultados del formulario.
                     echo "<form action = 'AddQuestionWithImage.php?usuario=".$_GET["usuario"]."' name = 'formulario' id = 'formulario' method = 'POST' enctype='multipart/form-data'>";
                 ?>
-                    Marque el tipo de usuario <br>
+                    Tipo de usuario* <br>
                 <?php
                     // No permitir que tampoco pueda modificar el tipo de usuario una vez se haya loggeado.
                     $pattern = '/^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/';
@@ -33,7 +33,7 @@
                       echo '<input type="radio" name="user" id="user2" value="Profesor" checked readonly>Profesor<br><br>';
                     }
 
-                    echo"Dirección de correo: <input type='text' id= 'email' name='email' value = '".$_GET["usuario"]."' readonly><br><br>";
+                    echo"Dirección de correo* <input type='text' id= 'email' name='email' value = '".$_GET["usuario"]."' readonly><br><br>";
                 ?>
                     Enunciado de la pregunta* <input type="text" id= "enunciado" name="enunciado"><br><br>
                     Respuesta Correcta* <input type="text" id= "correcta" name="correcta"><br>

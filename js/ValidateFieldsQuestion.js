@@ -14,9 +14,6 @@ $(document).ready(function () {
 
     //Funcion que resetea los parametros del formulario.
     $("#reset").click(function () {
-        $("#user1").prop("checked", false);
-        $("#user2").prop("checked", false);
-        $("#email").val("");
         $("#enunciado").val("");
         $("#correcta").val("");
         $("#incorrecta1").val("");

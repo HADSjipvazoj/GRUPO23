@@ -103,7 +103,7 @@
 
                             // Hay que asegurarse de que ha sido posible insertar al usuario en la base de datos.
                             if ($data_base->query($insert) == TRUE) {
-                                echo("Usuario creado con éxito. <br> Proceda a loggearse en el siguiente <a href = 'LogIn.php'>enlace</a>.");
+                                echo("Usuario creado con éxito. <br> Proceda a conectarse en el siguiente <a href = 'LogIn.php'>enlace</a>.");
                             } else {
                                 $data_base->close();
                                 $mensaje = "No ha sido posible almacenar el usuario. Inténtelo de nuevo más adelante.";
@@ -130,9 +130,8 @@
                             Nombre y apellidos* <input type="text" id= "nombre" name="nombre"><br>
                             Contraseña* <input type="password" id= "pass1" name="pass1"><br>
                             Repetir Contraseña* <input type="password" id= "pass2" name="pass2"><br>
-                            Imagen para el usuario: <input type="file" name="fileupload" id="fileupload"> <br> <br>
+                            Imagen para el usuario <input type="file" name="fileupload" id="fileupload"> <br> <br>
                             <input id="submit" name="submit" type="submit" value="Enviar">
-                            <input id="reset" type="reset" value="Deshacer">
                         </form>';
                     }
                 ?>

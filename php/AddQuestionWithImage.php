@@ -17,7 +17,7 @@
                     // Eliminar wernings cuando se producen errores
                     // Estos errores se gestionarán más adelante
                     error_reporting(E_ERROR | E_PARSE);
-                    
+
                     // Necesitaremos el acceso a la base de datos
                     include "DbConfig.php";
 
@@ -38,7 +38,7 @@
                     } else {
                         $pattern = '/^([a-z]|[A-Z])+(\.([a-z]|[A-Z])+)?@ehu\.(es|eus)$/';
                     }
-                    
+
                     // Asegurarse de que la dirección de email sigue el patrón.
                     if (!preg_match($pattern, $_REQUEST['email'])) {
                         $mensaje = "Email incorrecto para el tipo de usuario indicado.";
@@ -98,7 +98,7 @@
                     }
 
                     // Código para introducir la pregunta en la base de datos.
-                    $insert =  "INSERT INTO Preguntas (tipo_usuario,
+                    $insert =  "INSERT INTO preguntas (tipo_usuario,
                                                       correo,
                                                       enunciado,
                                                       r_correcta,
