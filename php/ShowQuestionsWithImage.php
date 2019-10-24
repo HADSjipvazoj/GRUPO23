@@ -14,28 +14,17 @@
         <section class="main" id="s1">
             <div>
             <?php
-                if($error){
-                    echo "El usuario no ha podido ser verificado. Intentelo en otro momento.";
-                    echo "</div>
-                        </section>";
-                    include '../html/Footer.html';
-                    echo "</body>
-                        </html>";
-                    exit;
-                }
                 // Eliminar wernings cuando se producen errores.
                 // Estos errores se gestionarán más adelante.
                 error_reporting(E_ERROR | E_PARSE);
 
                 include "DbConfig.php";
 
-                // Establecer la conexión con la base de datos
-                $data_base = mysqli_connect($server, $user, $pass, $basededatos);
-
                 // Caso en que la conexión no se haya podido establecer
-                if (!$data_base)
+                if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                 {
-                    die("No ha sido posible conectarse a la base de datos.<br> Por favor, inténtelo más adelante.");
+                    $mensaje = "No ha sido posible conectarse a la base de datos.";
+                    error_mensaje($mensaje);
                 }
 
                 // Solo cojo de la base de datos las columnas que necesito.
@@ -43,8 +32,12 @@
                 // Puede haber algún error en la consulta.
                 if(!$results = $data_base->query($query)){
                     $data_base->close();
-                    die("No ha sido posible acceder a las preguntas. <br> Por favor, inténtelo más adelante.");
+                    $mensaje = "No ha sido posible acceder a las preguntas.";
+                    error_mensaje($mensaje);
                 }
+                
+                // Cerrar la conexión con la base de datos
+                $data_base->close();
 
                 // Cada entrada en la base de datos es representada como una fila en la tabla
                 echo("<h1>Preguntas almacenadas en la Base de Datos</h1><br><br>");
@@ -58,9 +51,6 @@
                               <td height = "90"><img height="90" align = "middle" src="data:image/jpeg;base64,'.base64_encode($row['imagen']).'"</td></tr>');
                 }
                 echo("</table>");
-
-                // Cerrar la conexión con la base de datos
-                $data_base->close();
             ?>
             </div>
         </section>

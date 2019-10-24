@@ -18,17 +18,7 @@
                 <?php
                     // Suprimir warnings. Los errores se gestionan más abajo
                     error_reporting(E_ERROR | E_PARSE);
-                    function error_mensaje($mensaje) {
-                        echo  $mensaje.'<br>';
-                        echo 'Enlace al <a href="javascript:window.history.back()">formulario</a>.';
-                        echo "</div>
-                            </section>";
-                        include '../html/Footer.html';
-                        echo"</body>
-                            </html>
-                            ";
-                        exit;
-                    }
+
                     // Cuando se han enviado los datos del registro
                     if(isset($_REQUEST['submit'])){
                         // Si el usuario no ha introducido el tipo de usuario a registrar
@@ -74,6 +64,7 @@
                             error_mensaje($mensaje);
                         }
                         if(!$result = $data_base->query("SELECT correo from usuarios WHERE correo ='".$_REQUEST['email']."' ")){
+                            $data_base->close();
                             $mensaje = "No ha sido posible establecer la conexión con el servidor.";
                             error_mensaje($mensaje);
                         };
@@ -85,7 +76,7 @@
                             if($_FILES["fileupload"]["tmp_name"] && preg_match($pattern, $_FILES["fileupload"]["name"])){
                               $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
                             }else {
-                              $image = addslashes(file_get_contents("../images/anonymous.jpg"));
+                              $image = addslashes(file_get_contents("../images/anonymous.jpeg"));
                             }
 
                             $insert =  "INSERT INTO usuarios (correo,
@@ -102,10 +93,12 @@
                             if ($data_base->query($insert) == TRUE) {
                                 echo("Usuario creado con éxito. <br> Proceda a loggearse -> <a href = 'LogIn.php'>enlace</a>.");
                             } else {
+                                $data_base->close();
                                 $mensaje = "No ha sido posible almacenar el usuario. Inténtelo de nuevo más adelante.";
                                 error_mensaje($mensaje);
                             }
                         } else {
+                            $data_base->close();
                         // Si el usuario ya está registrado se devuelve un error
                             $mensaje = "Usuario ya registrado. Cambie la dirección de email.";
                             error_mensaje($mensaje);

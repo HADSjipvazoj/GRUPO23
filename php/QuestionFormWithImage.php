@@ -17,15 +17,6 @@
         <section class="main" id="s1">
             <div>
                 <?php
-                    if($error){
-                        echo "El usuario no ha podido ser verificado. Intentelo en otro momento.";
-                        echo "</div>
-                            </section>";
-                        include '../html/Footer.html';
-                        echo "</body>
-                            </html>";
-                        exit;
-                    }
                     echo "<form action = 'AddQuestionWithImage.php?usuario=".$_GET["usuario"]."' name = 'formulario' id = 'formulario' method = 'POST' enctype='multipart/form-data'>";
                 ?>
                     Marque el tipo de usuario <br>

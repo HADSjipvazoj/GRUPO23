@@ -16,16 +16,6 @@
         <section class="main" id="s1">
             <div>
                 <?php
-                    function error_mensaje($mensaje) {
-                        echo  $mensaje.'<br>';
-                        echo 'Enlace al <a href="javascript:window.history.back()">formulario</a>.';
-                        echo "</div>
-                            </section>";
-                        include '../html/Footer.html';
-                        echo"</body>
-                            </html>";
-                        exit;
-                    }
                     if(isset($_REQUEST["submit"])){
                         // Suprimir warnings. Los errores se gestionan más abajo
                         error_reporting(E_ERROR | E_PARSE);
@@ -49,10 +39,14 @@
                         }
                         // Mirar si el usuario está en la base de datos
                         if(!$result = $data_base->query("SELECT correo, contrasenia from usuarios WHERE correo ='".$_REQUEST['email']."' ")){
+                            $data_base->close();
                             $mensaje = "No ha sido posible establecer la conexión con el servidor.";
                             error_mensaje($mensaje);
                         };
 
+                        // Cerrar la base de datos
+                        $data_base->close();
+                        
                         if(mysqli_num_rows($result) == 0) // El usuario no está registrado
                         {
                             $mensaje = "Usuario no registrado.";
@@ -70,8 +64,6 @@
                             }
 
                         }
-                        // Cerrar la base de datos
-                        $data_base->close();
                     }else{
                         echo'<form name = "formulario" id = "formulario" method = "POST">
                                 <!--Marque el tipo de usuario <br>

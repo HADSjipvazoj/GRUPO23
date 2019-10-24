@@ -18,16 +18,6 @@
                     error_reporting(E_ERROR | E_PARSE);
 
                     include "DbConfig.php";
-                    function error_mensaje($mensaje) {
-                        echo  $mensaje.'<br>';
-                        echo 'Enlace al <a href="javascript:window.history.back()">formulario</a>.';
-                        echo "</div>
-                            </section>";
-                        include '../html/Footer.html';
-                        echo"</body>
-                            </html>";
-                        exit;
-                    }
 
                     if(!isset($_REQUEST['user']) || strlen($_REQUEST['user']) == 0){
                         $mensaje = "Selecciona un tipo de usuario.";
@@ -98,9 +88,8 @@
                     //Establecer la conexion con la base de datos.
                     if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                     {
-                        die("No ha sido posible establecer la conexión con el servidor. <br> <a href = 'QuestionFormWithImage.php'> Intentelo de nuevo. </a>");
-                    }else{
-                        echo("Conexión con el servidor establecida. <br>");
+                        $mensaje = "No ha sido posible establecer la conexión con el servidor.";
+                        error_mensaje($mensaje);
                     }
 
                     $insert =  "INSERT INTO Preguntas (tipo_usuario,
@@ -128,9 +117,10 @@
                     if ($data_base->query($insert) == TRUE) {
                         echo("Nueva pregunta almacenada con éxito. <br> Puede consultar las preguntas en el siguiente <a href = 'ShowQuestionsWithImage.php?usuario=".$_REQUEST["usuario"]."'>enlace</a>.");
                     } else {
-                        echo("No ha sido posible insertar su pregunta en la base de datos. <br> <a href = 'QuestionFormWithImage.php?usuario=".$_REQUEST["usuario"]."'> Intentelo de nuevo. </a>");
+                        $data_base->close();
+                        $mensaje = "No ha sido posible insertar su pregunta en la base de datos.";
+                        error_mensaje($mensaje);
                     }
-                    // Cerrar la conexión con la base de datos
                     $data_base->close();
                 ?>
 

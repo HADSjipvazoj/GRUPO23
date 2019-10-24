@@ -1,6 +1,7 @@
 <div id='page-wrap'>
 <header class='main' id='h1'>
   <?php
+      include '../php/Error.php';
       if(isset($_GET["usuario"])){
           echo "<span><a href='LogOut.php'>Log Out</a></span>";
       }else{
@@ -25,6 +26,8 @@
 
                   if(!$results = $data_base->query($query)){
                       $error = true;
+                  }else if($results->num_rows == 0){
+                      $error = true;
                   }
 
                   $data_base->close();
@@ -34,9 +37,7 @@
                 }
 
                 // Puede haber algún error en la consulta.
-                if(!$error && $results->num_rows == 0){
-                    $error = true;
-                }
+
                 // Mostrar la imagen en el menú superior
                 if(!$error){
                   $info = mysqli_fetch_assoc($results);
