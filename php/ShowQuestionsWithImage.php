@@ -15,7 +15,13 @@
             <div>
             <?php
                 if($error){
-                    die("El usuario no ha podido ser verificado. Intentelo en otro momento.");
+                    echo "El usuario no ha podido ser verificado. Intentelo en otro momento.";
+                    echo "</div>
+                        </section>";
+                    include '../html/Footer.html';
+                    echo "</body>
+                        </html>";
+                    exit;
                 }
                 // Eliminar wernings cuando se producen errores.
                 // Estos errores se gestionarán más adelante.

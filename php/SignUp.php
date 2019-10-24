@@ -21,6 +21,12 @@
                     function error_mensaje($mensaje) {
                         echo  $mensaje.'<br>';
                         echo 'Enlace al <a href="javascript:window.history.back()">formulario</a>.';
+                        echo "</div>
+                            </section>";
+                        include '../html/Footer.html';
+                        echo"</body>
+                            </html>
+                            ";
                         exit;
                     }
                     // Cuando se han enviado los datos del registro
@@ -117,7 +123,7 @@
                             Nombre y apellidos: <input type="text" id= "nombre" name="nombre"><br>
                             Contraseña: <input type="password" id= "pass1" name="pass1"><br>
                             Repetir Contraseña: <input type="password" id= "pass2" name="pass2"><br>
-                            Imagen para el usuario: <input type="file" name="fileupload" id="fileupload"> <br>
+                            Imagen para el usuario: <input type="file" name="fileupload" id="fileupload"> <br> <br>
                             <input id="submit" name="submit" type="submit" value="Enviar">
                             <input id="reset" type="reset" value="Deshacer">
                         </form>';

@@ -21,6 +21,11 @@
                     function error_mensaje($mensaje) {
                         echo  $mensaje.'<br>';
                         echo 'Enlace al <a href="javascript:window.history.back()">formulario</a>.';
+                        echo "</div>
+                            </section>";
+                        include '../html/Footer.html';
+                        echo"</body>
+                            </html>";
                         exit;
                     }
 
