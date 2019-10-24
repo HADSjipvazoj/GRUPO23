@@ -1,4 +1,5 @@
 <?php
+    //Si no hay ningún usuario "loggeado" se le redirecciona a la página inicial.
     if(isset($_GET["usuario"])){
         header('Location: Layout.php');
     }
@@ -19,8 +20,11 @@
                     if(isset($_REQUEST["submit"])){
                         // Suprimir warnings. Los errores se gestionan más abajo
                         error_reporting(E_ERROR | E_PARSE);
-                        include "DbConfig.php";
 
+                        // Necesitaremos el acceso a la base de datos
+                        include "DbConfig.php";
+                        
+                        // Comprobar que todos los parámetros estén introducidos y correctos.
                         if(!isset($_REQUEST["email"]) || strlen($_REQUEST['email']) == 0){
                           $mensaje = "Introduce el correo del usuario.";
                           error_mensaje($mensaje);
@@ -37,7 +41,8 @@
                             $mensaje = "No ha sido posible establecer la conexión con el servidor.";
                             error_mensaje($mensaje);
                         }
-                        // Mirar si el usuario está en la base de datos
+
+                        // Comprobar si el usuario está en la base de datos
                         if(!$result = $data_base->query("SELECT correo, contrasenia from usuarios WHERE correo ='".$_REQUEST['email']."' ")){
                             $data_base->close();
                             $mensaje = "No ha sido posible establecer la conexión con el servidor.";
@@ -65,6 +70,7 @@
 
                         }
                     }else{
+                        // Formulario
                         echo'<form name = "formulario" id = "formulario" method = "POST">
                                 <!--Marque el tipo de usuario <br>
                                 <input type="radio" name="user" id="user1" value="Alumno">Alumno<br>
@@ -76,7 +82,6 @@
                     }
 
                 ?>
-
             </div>
         </section>
         <?php include '../html/Footer.html' ?>

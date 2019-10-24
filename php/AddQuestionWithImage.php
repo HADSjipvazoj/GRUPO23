@@ -1,12 +1,13 @@
 <?php
-  if(!isset($_GET["usuario"])){
-      header('Location: Layout.php');
-  }
+    //Si no hay ningún usuario "loggeado" se le redirecciona a la página inicial.
+    if(!isset($_GET["usuario"])){
+        header('Location: Layout.php');
+    }
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-    <?php include '../html/Head.html'?>
+        <?php include '../html/Head.html'?>
     </head>
     <body>
         <?php include '../php/Menus.php'?>
@@ -16,9 +17,11 @@
                     // Eliminar wernings cuando se producen errores
                     // Estos errores se gestionarán más adelante
                     error_reporting(E_ERROR | E_PARSE);
-
+                    
+                    // Necesitaremos el acceso a la base de datos
                     include "DbConfig.php";
 
+                    // Comprobar que todos los parámetros estén introducidos y correctos.
                     if(!isset($_REQUEST['user']) || strlen($_REQUEST['user']) == 0){
                         $mensaje = "Selecciona un tipo de usuario.";
                         error_mensaje($mensaje);
@@ -29,12 +32,14 @@
                         error_mensaje($mensaje);
                     }
 
+                    // Escoger el patrón para validar el correo.
                     if ($_REQUEST['user'] == "Alumno") {
                         $pattern = '/^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/';
                     } else {
                         $pattern = '/^([a-z]|[A-Z])+(\.([a-z]|[A-Z])+)?@ehu\.(es|eus)$/';
                     }
-
+                    
+                    // Asegurarse de que la dirección de email sigue el patrón.
                     if (!preg_match($pattern, $_REQUEST['email'])) {
                         $mensaje = "Email incorrecto para el tipo de usuario indicado.";
                         error_mensaje($mensaje);
@@ -92,6 +97,7 @@
                         error_mensaje($mensaje);
                     }
 
+                    // Código para introducir la pregunta en la base de datos.
                     $insert =  "INSERT INTO Preguntas (tipo_usuario,
                                                       correo,
                                                       enunciado,
@@ -121,6 +127,8 @@
                         $mensaje = "No ha sido posible insertar su pregunta en la base de datos.";
                         error_mensaje($mensaje);
                     }
+
+                    // Cerrar la base de datos.
                     $data_base->close();
                 ?>
 

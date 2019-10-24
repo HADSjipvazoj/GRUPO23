@@ -1,7 +1,8 @@
 <?php
-  if(isset($_GET["usuario"])){
-    header('Location: Layout.php');
-  }
+    // Si no hay ningún usuario "loggeado" se le redirecciona a la página inicial.
+    if(isset($_GET["usuario"])){
+        header('Location: Layout.php');
+    }
 ?>
 <!DOCTYPE html>
 <html>

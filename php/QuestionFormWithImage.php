@@ -1,7 +1,8 @@
 <?php
-  if(!isset($_GET["usuario"])){
-      header('Location: Layout.php');
-  }
+    // Si no hay ningún usuario "loggeado" se le redirecciona a la página inicial.
+    if(!isset($_GET["usuario"])){
+        header('Location: Layout.php');
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,10 +18,12 @@
         <section class="main" id="s1">
             <div>
                 <?php
+                    // Introducir el email del usuario registrado en la URL a la que mandar los resultados del formulario.
                     echo "<form action = 'AddQuestionWithImage.php?usuario=".$_GET["usuario"]."' name = 'formulario' id = 'formulario' method = 'POST' enctype='multipart/form-data'>";
                 ?>
                     Marque el tipo de usuario <br>
                 <?php
+                    // No permitir que tampoco pueda modificar el tipo de usuario una vez se haya loggeado.
                     $pattern = '/^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/';
                     if(preg_match($pattern, $_GET['usuario'])){
                         echo '<input type="radio" name="user" id="user1" value="Alumno" checked readonly>Alumno<br>';

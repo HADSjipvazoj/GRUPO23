@@ -1,7 +1,8 @@
 <?php
-  if(!isset($_GET["usuario"])){
-    header('Location: Layout.php');
-  }
+    // Si no hay ningún usuario "loggeado" se le redirecciona a la página inicial.
+    if(!isset($_GET["usuario"])){
+        header('Location: Layout.php');
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,7 @@
                 // Estos errores se gestionarán más adelante.
                 error_reporting(E_ERROR | E_PARSE);
 
+                // Datos para acceder a la base de datos.
                 include "DbConfig.php";
 
                 // Caso en que la conexión no se haya podido establecer
@@ -29,6 +31,7 @@
 
                 // Solo cojo de la base de datos las columnas que necesito.
                 $query = "SELECT correo, enunciado, r_correcta, imagen FROM Preguntas ORDER BY id";
+                
                 // Puede haber algún error en la consulta.
                 if(!$results = $data_base->query($query)){
                     $data_base->close();

@@ -1,4 +1,5 @@
 <?php
+    // Si no hay ningún usuario "loggeado" se le redirecciona a la página inicial.
     if(isset($_GET["usuario"])){
         header('Location: Layout.php');
     }
@@ -26,6 +27,7 @@
                             $mensaje ='Introduzca el tipo de usuario';
                             error_mensaje($mensaje);
                         }
+
                         // Seleccionar la expresión regular para cada uno de los tipos de usuario
                         if ($_REQUEST['user'] == "Alumno") {
                             $pattern = '/^([a-z]|[A-Z])+[0-9]{3}@ikasle\.ehu\.(es|eus)$/';
@@ -57,12 +59,15 @@
 
                         // Tras comprobar todo ya accedo a la base de datos
                         include "DbConfig.php";
-
+                        
+                        // Conexión a la base de datos
                         if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                         {
                             $mensaje = "No ha sido posible establecer la conexión con el servidor.";
                             error_mensaje($mensaje);
                         }
+
+                        // Compruebo si está ya registrado.
                         if(!$result = $data_base->query("SELECT correo from usuarios WHERE correo ='".$_REQUEST['email']."' ")){
                             $data_base->close();
                             $mensaje = "No ha sido posible establecer la conexión con el servidor.";
@@ -72,6 +77,7 @@
                         // Solo lo añado si el usuario no está registrado
                         if(mysqli_num_rows($result) == 0)
                         {
+                            // Comprobar algún posible error en la imagen.
                             $pattern = '/(\.png|\.jpg|\.jpeg)$/i';
                             if($_FILES["fileupload"]["tmp_name"] && preg_match($pattern, $_FILES["fileupload"]["name"])){
                               $image = addslashes(file_get_contents($_FILES["fileupload"]["tmp_name"]));
@@ -89,7 +95,8 @@
                                                 '".$_REQUEST['nombre']."',
                                                 '".$_REQUEST['pass1']."',
                                                 '$image')";
-
+                            
+                            // Hay que asegurarse de que ha sido posible insertar al usuario en la base de datos.
                             if ($data_base->query($insert) == TRUE) {
                                 echo("Usuario creado con éxito. <br> Proceda a loggearse -> <a href = 'LogIn.php'>enlace</a>.");
                             } else {
@@ -98,12 +105,13 @@
                                 error_mensaje($mensaje);
                             }
                         } else {
+                            // Cerrar la base de datos
                             $data_base->close();
-                        // Si el usuario ya está registrado se devuelve un error
+                            // Si el usuario ya está registrado se devuelve un error
                             $mensaje = "Usuario ya registrado. Cambie la dirección de email.";
                             error_mensaje($mensaje);
                         }
-
+                        // Cerrar la base de datos si no han habido errores.
                         $data_base->close();
 
                     }else{
