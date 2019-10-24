@@ -23,7 +23,7 @@
 
                         // Necesitaremos el acceso a la base de datos
                         include "DbConfig.php";
-                        
+
                         // Comprobar que todos los parámetros estén introducidos y correctos.
                         if(!isset($_REQUEST["email"]) || strlen($_REQUEST['email']) == 0){
                           $mensaje = "Introduce el correo del usuario.";
@@ -51,27 +51,28 @@
 
                         // Cerrar la base de datos
                         $data_base->close();
-                        
+
                         if(mysqli_num_rows($result) == 0) // El usuario no está registrado
                         {
-                            $mensaje = "Usuario no registrado.";
+                            $mensaje = "Credenciales incorrectas.";
                             error_mensaje($mensaje);
                         } else {
                             // Caso de que el usuario esté registrado
                             $user = $result->fetch_assoc();
                             // Compruebo si ha introducido bien la contraseña
                             if($_REQUEST["pass"] != $user["contrasenia"]){
-                                $mensaje = "Contraseña incorrecta.";
+                                $mensaje = "Credenciales incorrectas.";
                                 error_mensaje($mensaje);
                             }else{
                                 echo"Credenciales correctas <br>";
-                                echo"Acceso a la aplicación <a href = 'Layout.php?usuario=".$_REQUEST["email"]."'>enlace</a>.";
+                                echo"Acceso a la aplicación en el siguiente <a href = 'Layout.php?usuario=".$_REQUEST["email"]."'>enlace</a>.";
                             }
 
                         }
                     }else{
                         // Formulario
-                        echo'<form name = "formulario" id = "formulario" method = "POST">
+                        echo'<h1>Conectarse</h1><br><br>
+                            <form name = "formulario" id = "formulario" method = "POST">
                                 <!--Marque el tipo de usuario <br>
                                 <input type="radio" name="user" id="user1" value="Alumno">Alumno<br>
                                 <input type="radio" name="user" id="user2" value="Profesor">Profesor<br><br>-->

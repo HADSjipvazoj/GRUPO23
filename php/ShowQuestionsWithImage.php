@@ -31,14 +31,14 @@
 
                 // Solo cojo de la base de datos las columnas que necesito.
                 $query = "SELECT correo, enunciado, r_correcta, imagen FROM Preguntas ORDER BY id";
-                
+
                 // Puede haber algún error en la consulta.
                 if(!$results = $data_base->query($query)){
                     $data_base->close();
                     $mensaje = "No ha sido posible acceder a las preguntas.";
                     error_mensaje($mensaje);
                 }
-                
+
                 // Cerrar la conexión con la base de datos
                 $data_base->close();
 

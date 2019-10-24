@@ -35,13 +35,18 @@
                             $pattern = '/^([a-z]|[A-Z])+(\.([a-z]|[A-Z])+)?@ehu\.(es|eus)$/';
                         }
 
+                        // Comprobamos el email
                         if (!isset($_REQUEST['email']) || !preg_match($pattern, $_REQUEST['email'])) {
                             $mensaje = "Email incorrecto para el tipo de usuario indicado.";
                             error_mensaje($mensaje);
                         }
 
-                        if(!isset($_REQUEST['nombre']) || strlen($_REQUEST["nombre"]) == 0){
-                            $mensaje = "Introduzca su nombre.";
+                        // El nombre y apellidos debe constar de minimo dos palabras
+                        $pattern = '/\S+ +\S+/';
+
+                        // Comprobamos nombre y apellidos
+                        if(!isset($_REQUEST['nombre']) || !preg_match($pattern, $_REQUEST['nombre'])){
+                            $mensaje = "Indica nombre y apellidos (Minimo dos palabras).";
                             error_mensaje($mensaje);
                         }
 
@@ -59,7 +64,7 @@
 
                         // Tras comprobar todo ya accedo a la base de datos
                         include "DbConfig.php";
-                        
+
                         // Conexión a la base de datos
                         if (!$data_base = mysqli_connect($server, $user, $pass, $basededatos))
                         {
@@ -95,10 +100,10 @@
                                                 '".$_REQUEST['nombre']."',
                                                 '".$_REQUEST['pass1']."',
                                                 '$image')";
-                            
+
                             // Hay que asegurarse de que ha sido posible insertar al usuario en la base de datos.
                             if ($data_base->query($insert) == TRUE) {
-                                echo("Usuario creado con éxito. <br> Proceda a loggearse -> <a href = 'LogIn.php'>enlace</a>.");
+                                echo("Usuario creado con éxito. <br> Proceda a loggearse en el siguiente <a href = 'LogIn.php'>enlace</a>.");
                             } else {
                                 $data_base->close();
                                 $mensaje = "No ha sido posible almacenar el usuario. Inténtelo de nuevo más adelante.";
@@ -116,14 +121,15 @@
 
                     }else{
                         // Cuando se muestra la pantalla de registro
-                        echo'<form  name = "formulario" id = "formulario" method = "POST" enctype="multipart/form-data">
-                            Marque el tipo de usuario <br>
+                        echo'<h1>Registrarse</h1><br><br>
+                            <form  name = "formulario" id = "formulario" method = "POST" enctype="multipart/form-data">
+                            Tipo de usuario* <br>
                             <input type="radio" name="user" id="user1" value="Alumno">Alumno<br>
                             <input type="radio" name="user" id="user2" value="Profesor">Profesor<br><br>
-                            Dirección de correo: <input type="text" id= "email" name="email"><br>
-                            Nombre y apellidos: <input type="text" id= "nombre" name="nombre"><br>
-                            Contraseña: <input type="password" id= "pass1" name="pass1"><br>
-                            Repetir Contraseña: <input type="password" id= "pass2" name="pass2"><br>
+                            Dirección de correo* <input type="text" id= "email" name="email"><br>
+                            Nombre y apellidos* <input type="text" id= "nombre" name="nombre"><br>
+                            Contraseña* <input type="password" id= "pass1" name="pass1"><br>
+                            Repetir Contraseña* <input type="password" id= "pass2" name="pass2"><br>
                             Imagen para el usuario: <input type="file" name="fileupload" id="fileupload"> <br> <br>
                             <input id="submit" name="submit" type="submit" value="Enviar">
                             <input id="reset" type="reset" value="Deshacer">

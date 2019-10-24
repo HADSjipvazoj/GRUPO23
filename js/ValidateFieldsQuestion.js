@@ -1,6 +1,7 @@
 $(document).ready(function () {
     //Funcion que comprueba que el formulario es valido. Si no lo es, no se envia al servidor.
     $("#formulario").submit(function () {
+        //Para realizar la comprobacion en el cliente, comentar la siguiente linea.
         return true;
         if (!check_fields()) return false;
         if (!check_email()) return false;
